@@ -3,7 +3,6 @@ import queue
 from datetime import datetime
 from threading import Thread
 from json import loads, dumps
-from time import sleep
 
 
 def new_connection_listener(communication_socket, active_connection_queue, message_queue, active_connection_dict):

@@ -11,6 +11,7 @@ def listen_from_socket(socket_listener, window):
         message_json = loads(data_from_socket)
 
         if message_json['action'] == 'disconnect_confirmation':
+            socket_listener.close()
             return
 
         if message_json['action'] == 'connect_confirmation':
@@ -97,7 +98,6 @@ def main():
                 'from': username
             })
             communication_socket.send(message_json.encode())
-            communication_socket.close()
 
             # Kill the listener thread
             thread.join()
