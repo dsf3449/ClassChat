@@ -134,18 +134,20 @@ def main():
             if message_json['action'] == 'command':
                 if message_json['command'] == 'msg' or message_json['command'] == 'message':
                     if message_json['args'][0] in active_connection_dict:
-                        socket_to_dm = active_connection_dict[message_json['args'][0]]
+                        user_to_dm = message_json['args'].pop(0)
+                        message_to_dm = " ".join(message_json['args'])
+                        socket_to_dm = active_connection_dict[user_to_dm]
                         dm = dumps({
                             'action': 'direct_message',
                             'from': message_json['from'],
-                            'message': message_json['args'][1]
+                            'message': message_to_dm
                         })
                         socket_to_dm.send(dm.encode())
 
                         active_connection_dict[message_json['from']].send(dumps({
                             'action': 'direct_message_confirmation',
-                            'to': message_json['args'][0],
-                            'message': message_json['args'][1]
+                            'to': user_to_dm,
+                            'message': message_to_dm
                         }).encode())
                     else:
                         active_connection_dict[message_json['from']].send(dumps({

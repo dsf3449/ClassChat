@@ -119,8 +119,8 @@ def main():
                 del split_message[0]
 
                 if command == 'msg' or command == 'message':
-                    if len(split_message) != 2:
-                        window['-CHATBOX-'].print('Invalid amount of arguments required, message accepts exactly 2.')
+                    if len(split_message) <= 2:
+                        window['-CHATBOX-'].print('Invalid amount of arguments required, message requires at least 2.')
                         continue
                     if len(split_message[0]) == 0:
                         window['-CHATBOX-'].print('You must supply a username to send a message to.')
